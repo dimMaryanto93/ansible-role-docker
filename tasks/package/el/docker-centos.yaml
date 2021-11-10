@@ -1,0 +1,19 @@
+---
+- name: Add docker repository for CentOS
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 0644
+
+- name: Install dockerd for CentOS
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: [ "docker-ce", "docker-ce-cli", "containerd.io" ]
+
+- name: Start docker daemon
+  service:
+    name: docker
+    state: started
+    daemon_reload: yes
+    enabled: yes

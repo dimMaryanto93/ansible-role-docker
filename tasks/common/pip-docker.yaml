@@ -1,0 +1,6 @@
+---
+- name: Install Docker Module for Python
+  become: true
+  pip:
+    name: docker
+    state: latest

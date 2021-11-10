@@ -1,0 +1,15 @@
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  }
+
+  {% if docker_storage_driver | length > 0 %}
+  ,"storage-driver": "{{ docker_storage_driver }}"
+  {% endif %}
+
+  {% if docker_insecure_registries | length > 0 %}
+  ,"insecure-registries": {{ docker_insecure_registries | to_json }}
+  {% endif %}
+}
