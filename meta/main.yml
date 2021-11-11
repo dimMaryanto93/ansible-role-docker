@@ -24,5 +24,4 @@ galaxy_info:
   - docker-engine
   - docker-compose
 
-dependencies: 
-  - ansible.posix
+dependencies: []

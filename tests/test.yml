@@ -1,5 +1,5 @@
 ---
 - hosts: localhost
-  remote_user: root
+  become: true
   roles:
-    - ansible-role-docker
+    - dimasm93.docker
