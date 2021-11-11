@@ -3,4 +3,4 @@
   yum:
     name: "{{ item }}"
     state: latest
-  loop: [ "yum-utils", "epel-release", "net-tools", "curl", "wget", "device-mapper-persistent-data", "lvm2", "fuse-overlayfs", "python-docker" ]
+  loop: [ "yum-utils", "epel-release", "net-tools", "curl", "wget", "device-mapper-persistent-data", "lvm2", "fuse-overlayfs", "python3-docker" ]

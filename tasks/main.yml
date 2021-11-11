@@ -2,10 +2,14 @@
 # tasks file for ansible-role-docker
 - name: Configure Security-enhanced
   block: 
-    - name: Set selinux permissive module on CentOS
+    - name: Set selinux permissive module on RedHat family
       ansible.posix.selinux:
         policy: targeted
         state: permissive
+      when: ansible_facts['os_family'] == 'RedHat'
+    
+    - name: Add firewall-cmd docker communication on RedHat family
+      include_tasks: common/el/firewall-cmd.yaml
       when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Install pre-requisites for docker
