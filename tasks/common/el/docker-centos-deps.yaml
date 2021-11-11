@@ -3,4 +3,18 @@
   yum:
     name: "{{ item }}"
     state: latest
-  loop: [ "yum-utils", "epel-release", "net-tools", "curl", "wget", "device-mapper-persistent-data", "lvm2", "fuse-overlayfs", "python3-docker" ]
+  loop: [ "yum-utils", "epel-release", "net-tools", "curl", "wget", "device-mapper-persistent-data", "lvm2", "fuse-overlayfs" ]
+
+- name: Install Python dependencies for Centos 7
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: [ "python-docker" ]
+  when: ansible_facts['distribution_major_version'] <= '7'
+
+- name: Install Python dependencies for Centos > 8
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: [ "python3-docker" ]
+  when: ansible_facts['distribution_major_version'] >= '8'
