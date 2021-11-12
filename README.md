@@ -1,12 +1,34 @@
-Role Name
+`dimmaryanto93.docker`
 =========
 
-A brief description of the role goes here.
+Repository ini digunakan untuk menginstall `docker`, `docker-compose` dan Docker Engine untuk Linux
+
+Support platform
+
+- Debian
+- Ubuntu
+- CentOS
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Untuk menggunakan role ini, kita membutuhkan package/collection 
+
+- [ansible.posix](https://github.com/ansible-collections/ansible.posix)
+
+Temen-temen bisa install, dengan cara 
+
+```bash
+ansible-galaxy collection install ansible.posix
+```
+
+Atau temen-temen bisa menggunakan `requirement.yaml` file and install menggunakan `ansible-galaxy collection install -r requirement.yaml`, dengan format seperti berikut:
+
+```yaml
+---
+collections:
+  - ansible.posix
+```
 
 Role Variables
 --------------
