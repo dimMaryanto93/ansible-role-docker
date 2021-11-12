@@ -33,12 +33,19 @@ collections:
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Ada beberapa variable yang temen-temen bisa gunakan untuk setting docker daemon, diantaranya seperti berikut:
+
+| Variable name                 | Example value | Description |
+| :---                          | :---          | :---        |
+| `docker_storage_driver`       | `overlay2`    | Default value untuk driver storage adalah `overlay2` tapi temen-temen bisa ganti drivernya sesuai dengan dokumentasi [berikut](https://docs.docker.com/storage/storagedriver/select-storage-driver/) |
+| `docker_insecure_registries`  | `[]`          | Default value untuk `insecure-registries` ada kosong tapi temen-tement bisa tambahkan value untuk url insecure registrynya sebagai array contohnya `["registry.example.com:8086", "registry.example.com:8087"]` |
+| `docker_insecure_user`        | `-`            | Default value untuk melakukan authentication ke insecure registry |
+| `docker_insecure_password`    | `-`            | Default value untuk melakukan authentication ke insecure registry |
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
@@ -46,15 +53,11 @@ Example Playbook
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers
+      become: true
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: dimmaryanto93.docker }
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT
