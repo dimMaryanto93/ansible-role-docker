@@ -14,14 +14,14 @@ galaxy_info:
       - xenial
       - bionic
       - focal
-  - name: CentOS
+  - name: Centos
     versions:
       - 7
       - 8
 
   galaxy_tags: 
   - docker
-  - docker-engine
-  - docker-compose
+  - docker_engine
+  - docker_compose
 
 dependencies: []
