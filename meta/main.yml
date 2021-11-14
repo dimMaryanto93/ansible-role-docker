@@ -14,7 +14,7 @@ galaxy_info:
       - xenial
       - bionic
       - focal
-  - name: EL
+  - name: CentOS
     versions:
       - 7
       - 8
