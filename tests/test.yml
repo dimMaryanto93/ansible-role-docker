@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: ["all"]
   become: true
   roles:
-    - dimasm93.docker
+    - dimmaryanto93.docker
