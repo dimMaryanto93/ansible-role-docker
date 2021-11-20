@@ -1,5 +1,20 @@
 ---
 - hosts: ["all"]
-  become: true
-  roles:
-    - ../../docker-role-docker
+  vars:
+    docker_insecure_registries_conf: 
+      - url: "example.registry.com:8087"
+        auth:
+          docker_login: true      
+          user: example1
+          password: secret1
+      - url: "example.registry.com:8086"
+        auth:
+          docker_login: true      
+          user: example2
+          password: secret2
+  tasks:
+    - debug:
+        msg: "{{ docker_insecure_registries_conf | map(attribute = 'url') | list | to_json }}"
+    - debug:
+        msg: "url: {{ item.url }}, user: {{ item.auth.user }}, secret: {{ item.auth.password }}"
+      loop: "{{ docker_insecure_registries_conf | list }}"

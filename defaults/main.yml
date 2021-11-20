@@ -1,6 +1,10 @@
 ---
 docker_storage_driver: overlay2
-# example value of docker_insecure_registries: ["registry.example.com:8086", "registry.example.com:8087"]
-docker_insecure_registries: []
-docker_insecure_user: ""
-docker_insecure_password: ""
+docker_insecure_registries_enabled: false
+### uncomment this when docker_insecure_registries_enabled is true
+# docker_insecure_registries_conf:
+#   - url: "example.registry.com:8087"
+#     auth:
+#       docker_login: true      
+#       user: example
+#       password: secret
