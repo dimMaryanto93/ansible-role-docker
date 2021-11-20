@@ -1,5 +1,5 @@
 ---
-- hosts: ["all"]
+- hosts: localhost
   vars:
     docker_insecure_registries_conf: 
       - url: "example.registry.com:8087"
