@@ -9,7 +9,7 @@
           password: secret1
       - url: "example.registry.com:8086"
         auth:
-          docker_login: true      
+          docker_login: false      
           user: example2
           password: secret2
   tasks:
@@ -17,4 +17,5 @@
         msg: "{{ docker_insecure_registries_conf | map(attribute = 'url') | list | to_json }}"
     - debug:
         msg: "url: {{ item.url }}, user: {{ item.auth.user }}, secret: {{ item.auth.password }}"
+      when: "{{ item.auth.docker_login }}"
       loop: "{{ docker_insecure_registries_conf | list }}"

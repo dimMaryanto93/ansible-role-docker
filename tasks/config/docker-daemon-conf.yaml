@@ -1,13 +1,11 @@
 ---
 - name: Create Directory /etc/docker
-  become: true
   file:
     path: /etc/docker
     state: directory
     mode: 0755
 
 - name: Set docker daemon
-  become: true
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
