@@ -17,5 +17,5 @@
         msg: "{{ docker_insecure_registries_conf | map(attribute = 'url') | list | to_json }}"
     - debug:
         msg: "url: {{ item.url }}, user: {{ item.auth.user }}, secret: {{ item.auth.password }}"
-      when: "{{ item.auth.docker_login }}"
+      when: item.auth.docker_login
       loop: "{{ docker_insecure_registries_conf | list }}"

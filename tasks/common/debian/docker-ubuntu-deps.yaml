@@ -1,7 +1,0 @@
----
-- name: Install Dependencies for Ubuntu
-  become: true
-  apt:
-    name: "{{ item }}"
-    state: latest
-  loop: [ 'apt-transport-https', 'ca-certificates', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', "gnupg", "lsb-release" ]

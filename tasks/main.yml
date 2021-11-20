@@ -16,24 +16,45 @@
   block: 
     - name: Install dependencies for CentOS
       include_tasks: common/el/docker-centos-deps.yaml
-      when: ansible_facts['distribution'] == 'CentOS'
+      when: ansible_facts['os_family'] == 'RedHat'
 
-    - name: Intall dependencies for Ubuntu
-      include_tasks: common/debian/docker-ubuntu-deps.yaml
-      when: ansible_facts['distribution'] == 'Ubuntu'
+    - name: Install Dependencies for Ubuntu
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop: [ 'apt-transport-https', 'ca-certificates', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', "gnupg", "lsb-release" ]
+      when: ansible_facts['os_family'] == 'Debian'
     
-    - name: Intall docker-py
-      include_tasks: common/pip-docker.yaml
+    - name: Import python docker module
+      pip:
+        name: docker
+        state: latest
 
 - name: Install docker packages
   block: 
-    - name: Install docker-ce for CentOS
-      include_tasks: package/el/docker-centos.yaml
+    - name: Add yum repository docker-ce for CentOS
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: 0644
       when: ansible_facts['distribution'] == 'CentOS'
     
-    - name: Install docker-ce for Ubuntu
+    - name: Add apt repository docker-ce for Ubuntu
       include_tasks: package/debian/docker-ubuntu.yaml
-      when: ansible_facts['distribution'] == 'Ubuntu'
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install dockerd
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop: [ "docker-ce", "docker-ce-cli", "containerd.io" ]
+
+    - name: Start docker daemon
+      service:
+        name: docker
+        state: started
+        daemon_reload: yes
+        enabled: yes
 
 - name: Post-Install docker, executeable non-root
   ansible.builtin.user:
@@ -43,3 +64,12 @@
 
 - name: Post-Install docker, config daemon.json
   include_tasks: config/docker-daemon-conf.yaml
+
+- name: Log into private registry and force re-authorization
+  community.docker.docker_login:
+    registry_url: "{{ item.url }}"
+    username: "{{ item.auth.user }}"
+    password: "{{ item.auth.password }}"
+    reauthorize: yes
+  when: item.auth.docker_login
+  loop: "{{ docker_insecure_registries_conf | list }}"
