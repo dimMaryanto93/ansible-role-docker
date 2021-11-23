@@ -65,6 +65,7 @@
 - name: Post-Install docker, config daemon.json
   include_tasks: config/docker-daemon-conf.yaml
 
+
 - name: Log into private registry and force re-authorization
   community.docker.docker_login:
     registry_url: "{{ item.url }}"

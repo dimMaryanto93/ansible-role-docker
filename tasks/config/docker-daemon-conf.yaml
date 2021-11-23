@@ -13,3 +13,10 @@
     mode: 0644
   notify:
     - Restart docker
+
+## force restart before authentication
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
+
