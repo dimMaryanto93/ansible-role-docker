@@ -47,7 +47,7 @@
       package:
         name: "{{ item }}"
         state: latest
-      loop: [ "docker-ce", "docker-ce-cli", "containerd.io" ]
+      loop: [ "docker-ce", "docker-ce-cli", "containerd.io", "docker-buildx-plugin", "docker-compose-plugin" ]
 
     - name: Start docker daemon
       service:
@@ -58,13 +58,13 @@
 
 - name: Post-Install docker, executeable non-root
   ansible.builtin.user:
-    name: "{{ ansible_user }}"
+    name: "{{ normal_user }}"
     groups: docker
     append: yes
+  when: normal_user
 
 - name: Post-Install docker, config daemon.json
   include_tasks: config/docker-daemon-conf.yaml
-
 
 - name: Log into private registry and force re-authorization
   community.docker.docker_login:
