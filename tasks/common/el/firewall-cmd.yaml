@@ -4,6 +4,7 @@
     zone: public
     masquerade: enabled
     permanent: yes
+    immediate: true
     state: enabled
     
 - name: Allow port 2375 expose to outside network
@@ -11,4 +12,5 @@
     zone: public
     port: 2375/tcp
     permanent: yes
+    immediate: true
     state: enabled
