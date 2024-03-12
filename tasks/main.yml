@@ -24,11 +24,6 @@
         state: latest
       loop: [ 'apt-transport-https', 'ca-certificates', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', "gnupg", "lsb-release" ]
       when: ansible_facts['os_family'] == 'Debian'
-    
-    - name: Import python docker module
-      pip:
-        name: docker
-        state: latest
 
 - name: Install docker packages
   block: 
@@ -67,10 +62,7 @@
   include_tasks: config/docker-daemon-conf.yaml
 
 - name: Log into private registry and force re-authorization
-  community.docker.docker_login:
-    registry_url: "{{ item.url }}"
-    username: "{{ item.auth.user }}"
-    password: "{{ item.auth.password }}"
-    reauthorize: yes
+  shell: 
+      cmd: docker login -u {{ item.auth.user }} -p {{ item.auth.password }} {{ item.url }}
   when: item.auth.docker_login
   loop: "{{ docker_insecure_registries_conf | list }}"
