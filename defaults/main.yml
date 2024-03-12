@@ -1,6 +1,7 @@
 ---
 docker_storage_driver: overlay2
 docker_insecure_registries_enabled: false
+docker_non_root_user: true
 ### uncomment this when `docker_insecure_registries_enabled` is true
 # docker_insecure_registries_conf:
 #   - url: "example.registry.com:8087"

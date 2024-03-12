@@ -53,10 +53,10 @@
 
 - name: Post-Install docker, executeable non-root
   ansible.builtin.user:
-    name: "{{ normal_user }}"
+    name: "{{ ansible_user }}"
     groups: docker
     append: yes
-  when: normal_user
+  when: docker_non_root_user
 
 - name: Post-Install docker, config daemon.json
   include_tasks: config/docker-daemon-conf.yaml
