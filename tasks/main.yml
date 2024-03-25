@@ -1,5 +1,4 @@
 ---
-# tasks file for ansible-role-docker
 - name: Configure Security-enhanced
   block: 
     - name: Set selinux permissive module on RedHat family
@@ -50,19 +49,3 @@
         state: started
         daemon_reload: yes
         enabled: yes
-
-- name: Post-Install docker, executeable non-root
-  ansible.builtin.user:
-    name: "{{ ansible_user }}"
-    groups: docker
-    append: yes
-  when: docker_non_root_user
-
-- name: Post-Install docker, config daemon.json
-  include_tasks: config/docker-daemon-conf.yaml
-
-- name: Log into private registry and force re-authorization
-  shell: 
-      cmd: docker login -u {{ item.auth.user }} -p {{ item.auth.password }} {{ item.url }}
-  when: item.auth.docker_login
-  loop: "{{ docker_insecure_registries_conf | list }}"
