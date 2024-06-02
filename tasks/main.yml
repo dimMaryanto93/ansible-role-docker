@@ -33,6 +33,13 @@
         mode: 0644
       when: ansible_facts['distribution'] == 'CentOS'
     
+    - name: Add yum repository docker-ce for OracleLinux
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: 0644
+      when: ansible_facts['distribution'] == 'OracleLinux'
+    
     - name: Add apt repository docker-ce for Ubuntu
       include_tasks: package/debian/docker-ubuntu.yaml
       when: ansible_facts['os_family'] == 'Debian'
