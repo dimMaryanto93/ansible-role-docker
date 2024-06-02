@@ -39,6 +39,13 @@
         dest: /etc/yum.repos.d/docker-ce.repo
         mode: 0644
       when: ansible_facts['distribution'] == 'OracleLinux'
+
+    - name: Add yum repository docker-ce for Rocky
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: 0644
+      when: ansible_facts['distribution'] == 'Rocky'
     
     - name: Add apt repository docker-ce for Ubuntu
       include_tasks: package/debian/docker-ubuntu.yaml
